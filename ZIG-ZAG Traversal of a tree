@@ -1,0 +1,35 @@
+Input:
+        1
+      /   \
+     2     3
+    / \   /  \
+   4   5 6    7
+Output:
+1 3 2 4 5 6 7
+CODE:
+vector <int> zigZagTraversal(Node* root)
+    {
+     vector<int>ans;
+        bool direction=true;
+        if(!root) return ans;
+        queue<Node*>q;
+        q.push(root);
+        while(!q.empty()){
+            int size=q.size();
+            vector<int>levelelem(size);
+            for(int i=0;i<size;i++){
+                Node* elem=q.front();
+                q.pop();
+                int index= direction?i:size-i-1;
+                levelelem[index]=elem->data;
+                if(elem->left)q.push(elem->left);
+                if(elem->right)q.push(elem->right);
+            }
+            direction=!direction;
+            for(int i=0;i<size;i++){
+                ans.push_back(levelelem[i]);
+            }
+        }
+        
+        return ans;
+    }
